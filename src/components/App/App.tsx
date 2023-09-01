@@ -1,4 +1,5 @@
 import './App.css'
+import Home from '../Pages/Home';
 import {
   createBrowserRouter,
   RouterProvider
@@ -8,7 +9,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <div>Hello world!</div>
+      element: <Home></Home>
     },
   ]);
   return (
