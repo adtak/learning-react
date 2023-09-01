@@ -135,7 +135,7 @@ export default function Template(props: TemplateProps) {
                 <ListItemText primary="トップページ" />
               </ListItem>
             </StyledLink>
-            <StyledLink to="/products">
+            <StyledLink to="/list">
               <ListItem>
                 <ListItemIcon>
                   <HomeIcon />

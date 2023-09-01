@@ -1,22 +1,22 @@
-import './App.css'
-import Home from '../Pages/Home';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
+import "./App.css";
+import Home from "../Pages/Home";
+import UserList from "../Pages/UserList";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-function App() {
+export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home></Home>
+      element: <Home></Home>,
+    },
+    {
+      path: "/list",
+      element: <UserList></UserList>,
     },
   ]);
   return (
     <>
       <RouterProvider router={router}></RouterProvider>
     </>
-  )
+  );
 }
-
-export default App
