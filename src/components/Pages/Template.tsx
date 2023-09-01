@@ -1,5 +1,4 @@
 import * as React from "react";
-import clsx from "clsx";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -10,8 +9,6 @@ import {
   createTheme,
   ThemeProvider,
   CssBaseline,
-  Theme,
-  createStyles,
   colors,
   IconButton,
   Typography,
@@ -22,11 +19,9 @@ import {
   ListItemText,
   Container,
   Box,
-  makeStyles,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-
-const drawerWidth = 240;
 
 const theme = createTheme({
   typography: {
@@ -51,90 +46,45 @@ const theme = createTheme({
   },
 });
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-    },
-    toolbar: {
-      paddingRight: 24,
-    },
-    toolbarIcon: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
-      padding: "0 8px",
-      ...theme.mixins.toolbar,
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    menuButtonHidden: {
-      display: "none",
-    },
-    title: {
-      flexGrow: 1,
-    },
-    pageTitle: {
-      marginBottom: theme.spacing(1),
-    },
-    drawerPaper: {
-      position: "relative",
-      whiteSpace: "nowrap",
-      width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerPaperClose: {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
-      },
-    },
-    appBarSpacer: theme.mixins.toolbar,
-    content: {
-      flexGrow: 1,
-      height: "100vh",
-      overflow: "auto",
-    },
-    container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-    },
-    paper: {
-      padding: theme.spacing(2),
-      display: "flex",
-      overflow: "auto",
-      flexDirection: "column",
-    },
-    link: {
-      textDecoration: "none",
-      color: theme.palette.text.secondary,
-    },
-  })
-);
+const StyledRoot = styled("div")({
+  display: "flex",
+});
+
+const StyledContent = styled("main")({
+  flexGrow: 1,
+  height: "100vh",
+  overflow: "auto",
+});
+
+const AppBarSpacer = styled("div")(({ theme }) => ({
+  ...theme.mixins.toolbar,
+}));
+
+const ToolbarIcon = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: "0 8px",
+  ...theme.mixins.toolbar,
+}));
+
+const StyledToolbar = styled(Toolbar)({
+  paddingRight: 24,
+});
+
+const StyledTypography = styled(Typography)({
+  flexGrow: 1,
+});
+
+const StyledLink = styled(Link)({
+  textDecoration: "none",
+  color: theme.palette.text.secondary,
+});
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  paddingTop: theme.spacing(4),
+  paddingBottom: theme.spacing(4),
+}));
 
 export interface TemplateProps {
   children: React.ReactNode;
@@ -142,7 +92,6 @@ export interface TemplateProps {
 }
 
 export default function Template(props: TemplateProps) {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -153,85 +102,65 @@ export default function Template(props: TemplateProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <StyledRoot>
         <CssBaseline />
-        <AppBar
-          position="absolute"
-          className={clsx(classes.appBar, open && classes.appBarShift)}
-        >
-          <Toolbar className={classes.toolbar}>
+        <AppBar position="absolute">
+          <StyledToolbar>
             <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
-              className={clsx(
-                classes.menuButton,
-                open && classes.menuButtonHidden
-              )}
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              className={classes.title}
-            >
-              管理画面
-            </Typography>
-          </Toolbar>
+            <StyledTypography component="h1" variant="h6" noWrap>
+              ヘッダー
+            </StyledTypography>
+          </StyledToolbar>
         </AppBar>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <div className={classes.toolbarIcon}>
+        <Drawer variant="permanent" open={open}>
+          <ToolbarIcon>
             <IconButton onClick={handleDrawerClose}>
               <ChevronLeftIcon />
             </IconButton>
-          </div>
+          </ToolbarIcon>
           <Divider />
           <List>
-            <Link to="/" className={classes.link}>
+            <StyledLink to="/">
               <ListItem>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="トップページ" />
               </ListItem>
-            </Link>
-            <Link to="/products" className={classes.link}>
+            </StyledLink>
+            <StyledLink to="/products">
               <ListItem>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="商品ページ" />
+                <ListItemText primary="一覧ページ" />
               </ListItem>
-            </Link>
+            </StyledLink>
           </List>
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            <Typography
+        <StyledContent>
+          <AppBarSpacer />
+          <StyledContainer maxWidth="lg">
+            <StyledTypography
               component="h2"
               variant="h5"
               color="inherit"
               noWrap
-              className={classes.pageTitle}
             >
               {props.title}
-            </Typography>
+            </StyledTypography>
             {props.children}
             <Box pt={4}></Box>
-          </Container>
-        </main>
-      </div>
+          </StyledContainer>
+        </StyledContent>
+      </StyledRoot>
     </ThemeProvider>
   );
 }
