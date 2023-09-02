@@ -1,7 +1,5 @@
 import * as React from "react";
 import HomeIcon from "@mui/icons-material/Home";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
   AppBar,
   Drawer,
@@ -10,7 +8,6 @@ import {
   ThemeProvider,
   CssBaseline,
   colors,
-  IconButton,
   Typography,
   Divider,
   List,
@@ -60,20 +57,8 @@ const AppBarSpacer = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const ToolbarIcon = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: "0 8px",
-  ...theme.mixins.toolbar,
-}));
-
 const StyledToolbar = styled(Toolbar)({
   paddingRight: 24,
-});
-
-const StyledTypography = styled(Typography)({
-  flexGrow: 1,
 });
 
 const StyledLink = styled(Link)({
@@ -91,40 +76,32 @@ export interface TemplateProps {
   title: string;
 }
 
-export default function Template(props: TemplateProps) {
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+const drawerWidth = 240;
 
+export default function Template(props: TemplateProps) {
   return (
     <ThemeProvider theme={theme}>
       <StyledRoot>
         <CssBaseline />
         <AppBar position="absolute">
           <StyledToolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-            >
-              <MenuIcon />
-            </IconButton>
-            <StyledTypography component="h1" variant="h6" noWrap>
+            <Typography component="h1" variant="h6" noWrap flexGrow={1}>
               ヘッダー
-            </StyledTypography>
+            </Typography>
           </StyledToolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <ToolbarIcon>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </ToolbarIcon>
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="permanent"
+        >
+          <StyledToolbar />
           <Divider />
           <List>
             <StyledLink to="/">
@@ -132,7 +109,7 @@ export default function Template(props: TemplateProps) {
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="トップページ" />
+                <ListItemText primary="Home" />
               </ListItem>
             </StyledLink>
             <StyledLink to="/list">
@@ -140,7 +117,7 @@ export default function Template(props: TemplateProps) {
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="一覧ページ" />
+                <ListItemText primary="List" />
               </ListItem>
             </StyledLink>
           </List>
@@ -148,14 +125,9 @@ export default function Template(props: TemplateProps) {
         <StyledContent>
           <AppBarSpacer />
           <StyledContainer maxWidth="lg">
-            <StyledTypography
-              component="h2"
-              variant="h5"
-              color="inherit"
-              noWrap
-            >
+            <Typography component="h2" variant="h6" color="inherit" noWrap>
               {props.title}
-            </StyledTypography>
+            </Typography>
             {props.children}
             <Box pt={4}></Box>
           </StyledContainer>
