@@ -16,7 +16,7 @@ export default function UserList() {
   return (
     <>
       <Template title="UserList">
-        <div style={{ height: 300, width: "100%" }}>
+        <div style={{ width: "100%", height: "85%" }}>
           <DataGrid rows={rows} columns={columns} />
         </div>
       </Template>

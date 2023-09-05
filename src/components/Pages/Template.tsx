@@ -46,13 +46,12 @@ const drawerWidth = 240;
 
 const Root = styled("div")({
   display: "flex",
-  width: "100%",
 });
 
 const MainContent = styled("main")({
-  height: "100vh",
+  width: `calc(100% - ${drawerWidth}px)`,
+  height: "100%",
   overflow: "auto",
-  flexGrow: 1,
 });
 
 const AppBarSpacer = styled("div")(({ theme }) => ({
@@ -74,6 +73,7 @@ const StyledLink = styled(Link)({
 });
 
 const StyledContainer = styled(Container)(({ theme }) => ({
+  height: "90vh",
   paddingTop: theme.spacing(4),
   paddingBottom: theme.spacing(4),
 }));
