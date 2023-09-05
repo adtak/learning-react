@@ -43,23 +43,19 @@ const theme = createTheme({
   },
 });
 
-const StyledRoot = styled("div")({
+const Root = styled("div")({
   display: "flex",
 });
 
-const StyledContent = styled("main")({
-  flexGrow: 1,
+const MainContent = styled("main")({
   height: "100vh",
   overflow: "auto",
+  flexGrow: 1,
 });
 
 const AppBarSpacer = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
-
-const StyledToolbar = styled(Toolbar)({
-  paddingRight: 24,
-});
 
 const StyledLink = styled(Link)({
   textDecoration: "none",
@@ -81,14 +77,14 @@ const drawerWidth = 240;
 export default function Template(props: TemplateProps) {
   return (
     <ThemeProvider theme={theme}>
-      <StyledRoot>
+      <Root>
         <CssBaseline />
         <AppBar position="absolute">
-          <StyledToolbar>
+          <Toolbar>
             <Typography component="h1" variant="h6" noWrap flexGrow={1}>
               ヘッダー
             </Typography>
-          </StyledToolbar>
+          </Toolbar>
         </AppBar>
         <Drawer
           sx={{
@@ -101,7 +97,7 @@ export default function Template(props: TemplateProps) {
           }}
           variant="permanent"
         >
-          <StyledToolbar />
+          <Toolbar />
           <Divider />
           <List>
             <StyledLink to="/">
@@ -122,17 +118,17 @@ export default function Template(props: TemplateProps) {
             </StyledLink>
           </List>
         </Drawer>
-        <StyledContent>
+        <MainContent>
           <AppBarSpacer />
-          <StyledContainer maxWidth="lg">
+          <StyledContainer maxWidth="xl">
             <Typography component="h2" variant="h6" color="inherit" noWrap>
               {props.title}
             </Typography>
             {props.children}
             <Box pt={4}></Box>
           </StyledContainer>
-        </StyledContent>
-      </StyledRoot>
+        </MainContent>
+      </Root>
     </ThemeProvider>
   );
 }
