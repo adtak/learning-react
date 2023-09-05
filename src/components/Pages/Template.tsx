@@ -15,7 +15,6 @@ import {
   ListItemIcon,
   ListItemText,
   Container,
-  Box,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
@@ -43,8 +42,11 @@ const theme = createTheme({
   },
 });
 
+const drawerWidth = 240;
+
 const Root = styled("div")({
   display: "flex",
+  width: "100%",
 });
 
 const MainContent = styled("main")({
@@ -56,6 +58,15 @@ const MainContent = styled("main")({
 const AppBarSpacer = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
+
+const StyledAppBar = styled(AppBar)({
+  marginLeft: drawerWidth,
+  width: `calc(100% - ${drawerWidth}px)`,
+});
+
+const StyledToolbar = styled(Toolbar)({
+  margin: "0 auto",
+});
 
 const StyledLink = styled(Link)({
   textDecoration: "none",
@@ -72,20 +83,18 @@ export interface TemplateProps {
   title: string;
 }
 
-const drawerWidth = 240;
-
 export default function Template(props: TemplateProps) {
   return (
     <ThemeProvider theme={theme}>
       <Root>
         <CssBaseline />
-        <AppBar position="absolute">
-          <Toolbar>
-            <Typography component="h1" variant="h6" noWrap flexGrow={1}>
-              ヘッダー
+        <StyledAppBar position="absolute">
+          <StyledToolbar>
+            <Typography component="h1" variant="h6" noWrap>
+              Header
             </Typography>
-          </Toolbar>
-        </AppBar>
+          </StyledToolbar>
+        </StyledAppBar>
         <Drawer
           sx={{
             width: drawerWidth,
@@ -120,12 +129,14 @@ export default function Template(props: TemplateProps) {
         </Drawer>
         <MainContent>
           <AppBarSpacer />
-          <StyledContainer maxWidth="xl">
+          <StyledContainer>
             <Typography component="h2" variant="h6" color="inherit" noWrap>
               {props.title}
             </Typography>
             {props.children}
-            <Box pt={4}></Box>
+            <Typography variant="body2" align="center" padding={2} noWrap>
+              Footer
+            </Typography>
           </StyledContainer>
         </MainContent>
       </Root>
